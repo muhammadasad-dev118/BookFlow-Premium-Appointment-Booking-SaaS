@@ -51,51 +51,6 @@ BookFlow is an advanced, multi-tenant SaaS platform built for modern service-ori
 
 ---
 
-## 🛠️ Installation & Setup
-
-### Prerequisites
-- PHP 8.2 or higher
-- Composer
-- Node.js & NPM
-- MySQL
-
-### Step-by-Step Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/bookflow.git
-   cd bookflow
-   ```
-
-2. **Install dependencies**
-   ```bash
-   composer install
-   npm install
-   ```
-
-3. **Configure Environment**
-   ```bash
-   cp .env.example .env
-   php artisan key:generate
-   ```
-   *Edit `.env` and set your database and Stripe credentials.*
-
-4. **Run Migrations & Seeders**
-   ```bash
-   php artisan migrate --seed
-   ```
-
-5. **Build Assets**
-   ```bash
-   npm run build
-   ```
-
-6. **Start the server**
-   ```bash
-   php artisan serve
-   ```
-
----
 
 ## 📜 License
 
