@@ -97,14 +97,6 @@ BookFlow is an advanced, multi-tenant SaaS platform built for modern service-ori
 
 ---
 
-## 📸 Screenshots
-
-| Admin Statistics | Business Dashboard |
-|---|---|
-| ![Admin](file:///C:/Users/sharjah laptop/.gemini/antigravity/brain/fae67166-9e8e-4389-8b91-7e61007566ad/dashboard_admin_1772950826630.png) | ![Tenant](file:///C:/Users/sharjah laptop/.gemini/antigravity/brain/fae67166-9e8e-4389-8b91-7e61007566ad/final_dashboard_check_1772953185851.png) |
-
----
-
 ## 📜 License
 
 The BookFlow platform is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
