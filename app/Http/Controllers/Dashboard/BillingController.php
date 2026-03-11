@@ -16,13 +16,13 @@ class BillingController extends Controller
             [
                 'name' => 'Basic',
                 'price' => 29,
-                'lookup_key' => 'price_basic_monthly',
+                'lookup_key' => config('services.stripe.plans.basic'),
                 'features' => ['Up to 3 staff members', 'Unlimited appointments', 'Email reminders', 'Basic analytics'],
             ],
             [
                 'name' => 'Pro',
                 'price' => 79,
-                'lookup_key' => 'price_pro_monthly',
+                'lookup_key' => config('services.stripe.plans.pro'),
                 'features' => ['Unlimited staff members', 'Unlimited appointments', 'SMS & Email reminders', 'Advanced analytics', 'Priority support', 'Custom branding'],
             ],
         ];
@@ -34,6 +34,10 @@ class BillingController extends Controller
     {
         $tenant = auth()->user()->tenants()->first();
         $priceId = $request->input('price_id');
+        
+        if (!$priceId) {
+            return back()->with('error', 'Invalid plan selected or plan not configured.');
+        }
 
         try {
             return $tenant->newSubscription('default', $priceId)

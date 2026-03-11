@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="{ sidebarOpen: true, profileOpen: false, notifOpen: false }" class="dark">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="{ sidebarOpen: true }" class="dark">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,8 +13,9 @@
     <!-- Vite Assets -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <!-- Livewire Styles -->
-    @livewireStyles
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
 
     <style>
         :root {
@@ -133,6 +134,8 @@
         .delay-4 { animation-delay: 0.2s; }
     </style>
 
+    <style>[x-cloak] { display: none !important; }</style>
+
     @stack('styles')
 </head>
 <body class="bg-[#0f172a] text-slate-200 antialiased min-h-screen">
@@ -239,22 +242,72 @@
                 <!-- Right: Actions -->
                 <div class="flex items-center gap-3">
                     <!-- Notifications -->
-                    <div class="relative" x-data="{ open: false }">
-                        <button @click="open = !open" class="relative p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition">
+                    <!-- Notifications -->
+                    <div class="relative" x-data="{ notifOpen: false }" @click.outside="notifOpen = false">
+                        <button @click="notifOpen = !notifOpen" class="relative p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition" type="button">
                             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/></svg>
-                            <span class="absolute -top-0.5 -right-0.5 w-4 h-4 bg-amber-500 rounded-full text-[10px] font-bold text-slate-900 flex items-center justify-center">3</span>
+                            <span class="absolute -top-0.5 -right-0.5 w-4 h-4 bg-amber-500 rounded-full text-[10px] font-bold text-slate-900 flex items-center justify-center border-2 border-[#0f172a] pointer-events-none">3</span>
                         </button>
+
+                        <div x-show="notifOpen"
+                             class="absolute right-0 mt-2 w-80 glass-card py-2 z-50">
+                            <div class="px-4 py-2 border-b border-white/5 flex items-center justify-between">
+                                <span class="text-xs font-bold text-white uppercase tracking-wider">Notifications</span>
+                                <span class="text-[10px] text-amber-500 font-medium">3 New</span>
+                            </div>
+                            <div class="max-h-96 overflow-y-auto">
+                                <a href="#" class="block px-4 py-3 hover:bg-white/5 transition border-b border-white/5">
+                                    <div class="flex gap-3">
+                                        <div class="w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center flex-shrink-0">
+                                            <svg class="w-4 h-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-white font-medium">Subscription Active</p>
+                                            <p class="text-xs text-slate-400 mt-0.5">Your Basic Plan is now active. Enjoy!</p>
+                                            <p class="text-[10px] text-slate-500 mt-1">Just now</p>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="#" class="block px-4 py-3 hover:bg-white/5 transition border-b border-white/5">
+                                    <div class="flex gap-3">
+                                        <div class="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0">
+                                            <svg class="w-4 h-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-white font-medium">New Appointment</p>
+                                            <p class="text-xs text-slate-400 mt-0.5">A new booking for Bridal Makeup.</p>
+                                            <p class="text-[10px] text-slate-500 mt-1">2 hours ago</p>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="#" class="block px-4 py-3 hover:bg-white/5 transition">
+                                    <div class="flex gap-3">
+                                        <div class="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center flex-shrink-0">
+                                            <svg class="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-white font-medium">System Update</p>
+                                            <p class="text-xs text-slate-400 mt-0.5">BookFlow v2.1 is now live.</p>
+                                            <p class="text-[10px] text-slate-500 mt-1">1 day ago</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="px-4 py-2 border-t border-white/5 text-center">
+                                <a href="#" class="text-xs font-medium text-amber-500 hover:text-amber-400 transition">View All Notifications</a>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Profile Dropdown -->
-                    <div class="relative" x-data="{ open: false }">
+                    <div class="relative" x-data="{ open: false }" @click.outside="open = false">
                         <button @click="open = !open" class="flex items-center gap-2 p-1.5 rounded-lg hover:bg-white/5 transition">
                             <div class="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-xs font-bold text-slate-900">
                                 {{ strtoupper(substr(auth()->user()->name, 0, 2)) }}
                             </div>
                             <svg class="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                         </button>
-                        <div x-show="open" @click.away="open = false"
+                        <div x-show="open"
                              x-transition:enter="transition ease-out duration-100"
                              x-transition:enter-start="opacity-0 scale-95"
                              x-transition:enter-end="opacity-100 scale-100"
@@ -288,7 +341,6 @@
         </main>
     </div>
 
-    @livewireScripts
 
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>

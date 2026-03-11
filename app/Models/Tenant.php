@@ -28,7 +28,7 @@ class Tenant extends Model
             return 'free';
         }
 
-        return $subscription->stripe_price === 'price_pro_monthly' ? 'pro' : 'basic';
+        return $subscription->stripe_price === config('services.stripe.plans.pro') ? 'pro' : 'basic';
     }
 
     public function canAddStaff(): bool

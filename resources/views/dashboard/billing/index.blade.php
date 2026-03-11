@@ -27,7 +27,15 @@
                     <form method="POST" action="{{ route('billing.subscribe') }}">
                         @csrf
                         <input type="hidden" name="price_id" value="{{ $plan['lookup_key'] }}">
-                        <button type="submit" class="btn-primary w-full">{{ $subscription ? 'Switch to ' . $plan['name'] : 'Subscribe' }}</button>
+                        
+                        @if(!$plan['lookup_key'])
+                            <div class="mb-4 p-2 bg-red-500/10 border border-red-500/20 text-red-400 text-xs rounded">
+                                ⚠️ This plan is not configured yet. Please add the Price ID to your .env file.
+                            </div>
+                            <button type="button" class="btn-primary w-full opacity-50 cursor-not-allowed" disabled>Subscribe</button>
+                        @else
+                            <button type="submit" class="btn-primary w-full">{{ $subscription ? 'Switch to ' . $plan['name'] : 'Subscribe' }}</button>
+                        @endif
                     </form>
                 @endif
             </div>

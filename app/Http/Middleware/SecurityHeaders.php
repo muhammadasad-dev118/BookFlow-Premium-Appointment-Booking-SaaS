@@ -21,7 +21,7 @@ class SecurityHeaders
         $response->headers->set('X-XSS-Protection', '1; mode=block');
         $response->headers->set('X-Content-Type-Options', 'nosniff');
         $response->headers->set('Referrer-Policy', 'no-referrer-when-downgrade');
-        $response->headers->set('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://js.stripe.com; style-src 'self' 'unsafe-inline' https://fonts.bunny.net; font-src 'self' https://fonts.bunny.net; img-src 'self' data: https://stripe.com https://*.stripe.com https://ui-avatars.com; frame-src 'self' https://checkout.stripe.com https://js.stripe.com;");
+        $response->headers->set('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://js.stripe.com; style-src 'self' 'unsafe-inline' https://fonts.bunny.net; font-src 'self' https://fonts.bunny.net https://js.stripe.com; img-src 'self' data: https://stripe.com https://*.stripe.com https://ui-avatars.com; frame-src 'self' https://checkout.stripe.com https://js.stripe.com; connect-src 'self' https://cdn.jsdelivr.net https://api.stripe.com;");
 
         return $response;
     }
